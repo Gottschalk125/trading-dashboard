@@ -1,30 +1,29 @@
-import {Config} from './types';
-import {Accountbalance} from './types';
-import {Trade} from './types';
+import { Config, AccountBalance, Trade } from './types'; // AccountBalance wurde korrigiert
 
 const BASE_URL = 'http://localhost:8000';
 
 export async function fetchConfig(): Promise<Config> {
     const response = await fetch(`${BASE_URL}/config`);
     if (!response.ok) throw new Error('Failed to fetch config');
-    // Important: Cast the response to the Config type
-    return response.json() as Promise<Config>;
+    // Korrekt: await wird verwendet, um den Promise-Inhalt zu holen
+    return (await response.json()) as Config;
 }
 
-export async function fetchAccountBalance(): Promise<Accountbalance> {
-    // Endpunkt korrigiert
+export async function fetchAccountBalance(): Promise<AccountBalance> {
     const response = await fetch(`${BASE_URL}/account/balance`);
     if (!response.ok) throw new Error('Failed to fetch account balance');
-    // Korrektes Casting: as AccountBalance
-    return response.json() as Promise<Accountbalance>;
+    // Korrekt: await wird verwendet und das Promise im Casting entfernt
+    const data = await response.json();
+    return data as AccountBalance;
 }
 
 export async function fetchTrade(): Promise<Trade[]> {
     const response = await fetch(`${BASE_URL}/trades`);
     if(!response.ok) throw new Error('Failed to fetch trades');
-    // Korrektes Casting: as Trade[]
-    return response.json() as Promise<Trade[]>;
+    // Korrekt: await wird verwendet und das Promise im Casting entfernt
+    return (await response.json()) as Trade[];
 }
+
 export async function updateConfig(newConfig: Partial<Config>): Promise<Config> {
     const response = await fetch(`${BASE_URL}/config`, {
         method: 'PUT',
@@ -34,5 +33,6 @@ export async function updateConfig(newConfig: Partial<Config>): Promise<Config> 
         body: JSON.stringify(newConfig),
     });
     if (!response.ok) throw new Error('Failed to update config');
-    return response.json() as Promise<Config>;
+    // Korrekt: await wird verwendet und das Promise im Casting entfernt
+    return (await response.json()) as Config;
 }

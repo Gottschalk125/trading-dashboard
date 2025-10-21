@@ -11,7 +11,7 @@ export function useConfig() {
     useEffect(() => {
         fetchConfig()
             .then(data => setConfig(data))
-            .catch(err => setError('Could not load configuration.'))
+            .catch(_err => setError('Could not load configuration.'))
             .finally(() => setLoading(false));
     }, []);
 

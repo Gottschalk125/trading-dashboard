@@ -1,0 +1,15 @@
+// tsconfig.node.json
+
+{
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tsbuildinfo",
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "target": "ES2022" // Hält das Target modern
+  },
+  "include": ["vite.config.ts"] // Ziel: Nur die Vite-Konfiguration
+}
